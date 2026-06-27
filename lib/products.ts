@@ -7,6 +7,8 @@ export const products = [
     description:
       "Soft, juicy and rich gulab jamuns made with premium ingredients and dipped in fragrant sugar syrup.",
     ingredients: ["Khoya", "Sugar", "Cardamom", "Ghee"],
+category: "Milk Sweets",
+    badge: "⭐ Best Seller",
   },
   {
     name: "Rasgulla",
@@ -16,6 +18,8 @@ export const products = [
     description:
       "Fresh, spongy and delicious rasgullas prepared with soft chhena and light sugar syrup.",
     ingredients: ["Chhena", "Sugar", "Water", "Rose essence"],
+category: "Bengali Sweets",
+    badge: "🔥 Most Popular",
   },
   {
     name: "Kaju Katli",
@@ -25,5 +29,7 @@ export const products = [
     description:
       "Premium kaju katli made with fine cashews, smooth texture and a rich traditional taste.",
     ingredients: ["Cashew", "Sugar", "Ghee", "Silver leaf"],
+category: "Dry Fruit Sweets",
+    badge: "👑 Premium",
   },
 ];

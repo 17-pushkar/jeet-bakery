@@ -27,17 +27,22 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           <Link href="/" className="hover:text-orange-600 transition">
-            Home
-          </Link>
-          <Link href="#sweets" className="hover:text-orange-600 transition">
-            Sweets
-          </Link>
-          <Link href="#about" className="hover:text-orange-600 transition">
-            About
-          </Link>
-          <Link href="#contact" className="hover:text-orange-600 transition">
-            Contact
-          </Link>
+  Home
+</Link>
+
+<Link href="/products" className="hover:text-orange-600 transition">
+  All Products
+</Link>
+
+<Link href="/#sweets" className="hover:text-orange-600 transition">
+  Sweets
+</Link>
+<Link href="/#about" className="hover:text-orange-600 transition">
+  About
+</Link>
+<Link href="/#contact" className="hover:text-orange-600 transition">
+  Contact
+</Link>
         </div>
 
         <div className="flex items-center gap-4">
@@ -64,20 +69,24 @@ export default function Navbar() {
         <div className="border-t bg-white px-6 py-5 shadow-lg md:hidden">
           <div className="flex flex-col gap-4 font-medium">
             <Link href="/" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
+  Home
+</Link>
 
-            <Link href="#sweets" onClick={() => setIsOpen(false)}>
-              Sweets
-            </Link>
+<Link href="/products" onClick={() => setIsOpen(false)}>
+  All Products
+</Link>
 
-            <Link href="#about" onClick={() => setIsOpen(false)}>
-              About
-            </Link>
+<Link href="/#sweets" onClick={() => setIsOpen(false)}>
+  Sweets
+</Link>
 
-            <Link href="#contact" onClick={() => setIsOpen(false)}>
-              Contact
-            </Link>
+<Link href="/#about" onClick={() => setIsOpen(false)}>
+  About
+</Link>
+
+<Link href="/#contact" onClick={() => setIsOpen(false)}>
+  Contact
+</Link>
 
             <button className="mt-2 rounded-xl bg-orange-600 px-6 py-3 font-semibold text-white">
               Order Now
