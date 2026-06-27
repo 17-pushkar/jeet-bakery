@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Heart } from "lucide-react";
 
 type ProductCardProps = {
@@ -17,7 +18,10 @@ export default function ProductCard({
   badge,
 }: ProductCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+    <Link
+  href={`/products/${name.toLowerCase().replace(/\s+/g, "-")}`}
+  className="group relative block overflow-hidden rounded-2xl border border-orange-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+>
      <div className="relative">
         <button className="absolute right-4 top-4 z-10 rounded-full bg-white/90 p-2 shadow-md transition hover:scale-110 hover:bg-orange-100">
   <Heart className="h-5 w-5 text-orange-600" />
@@ -59,6 +63,6 @@ export default function ProductCard({
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
