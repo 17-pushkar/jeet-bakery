@@ -21,9 +21,7 @@ export default function ProductGridCard({
   badge,
 }: ProductGridCardProps) {
   return (
-    <Link
-      href={`/products/${slug}`}
-      className="group overflow-hidden rounded-3xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl"
+    <div className="group overflow-hidden rounded-3xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl"
     >
       <div className="relative h-64">
         <Image
@@ -52,7 +50,22 @@ export default function ProductGridCard({
         <p className="mt-2 text-zinc-600">{description}</p>
 
         <p className="mt-4 text-xl font-bold text-orange-600">{price}</p>
+        <div className="mt-5 flex gap-3">
+  <Link
+  href={`/products/${slug}`}
+  className="rounded-full bg-orange-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-700"
+>
+  View Details
+</Link>
+
+  <button
+    type="button"
+    className="rounded-full border border-orange-300 px-5 py-2 text-sm font-semibold text-orange-600 transition hover:bg-orange-100"
+  >
+    Quick View
+  </button>
+</div>
       </div>
-    </Link>
+    </div>
   );
 }
