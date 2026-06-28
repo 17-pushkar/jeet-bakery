@@ -114,6 +114,7 @@ export default function ProductsPage() {
   image={product.image}
   description={product.description}
   category={product.category}
+  ingredients={product.ingredients}
   badge={product.badge}
 />
             ))}
