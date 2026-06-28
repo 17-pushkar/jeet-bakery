@@ -28,12 +28,12 @@ export default function ProductsPage() {
     }
 
     if (sortBy === "price-low") {
-      return Number(a.price.replace(/\D/g, "")) - Number(b.price.replace(/\D/g, ""));
-    }
+  return a.weightOptions[2].price - b.weightOptions[2].price;
+}
 
-    if (sortBy === "price-high") {
-      return Number(b.price.replace(/\D/g, "")) - Number(a.price.replace(/\D/g, ""));
-    }
+if (sortBy === "price-high") {
+  return b.weightOptions[2].price - a.weightOptions[2].price;
+}
 
     return 0;
   });
@@ -116,6 +116,7 @@ export default function ProductsPage() {
   category={product.category}
   ingredients={product.ingredients}
   badge={product.badge}
+  weightOptions={product.weightOptions}
 />
             ))}
           </div>

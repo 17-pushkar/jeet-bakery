@@ -4,6 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import ProductQuickViewModal from "./ProductQuickViewModal";
+import { useCart } from "@/context/CartContext";
+import toast from "react-hot-toast";
+
+type WeightOption = {
+  weight: string;
+  price: number;
+};
 
 type ProductGridCardProps = {
   name: string;
@@ -14,6 +21,7 @@ type ProductGridCardProps = {
   category: string;
   ingredients: string[];
   badge?: string;
+  weightOptions: WeightOption[];
 };
 
 export default function ProductGridCard({
@@ -25,8 +33,11 @@ export default function ProductGridCard({
   category,
   ingredients,
   badge,
+  weightOptions,
 }: ProductGridCardProps) {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [selectedWeight, setSelectedWeight] = useState(weightOptions[2]);
+  const { addToCart } = useCart();
 
   return (
     <div className="group overflow-hidden rounded-3xl bg-white shadow-md transition hover:shadow-xl">
@@ -56,9 +67,28 @@ export default function ProductGridCard({
 
         <p className="mt-2 text-zinc-600">{description}</p>
 
-        <p className="mt-4 text-xl font-bold text-orange-600">{price}</p>
+        <p className="mt-4 text-xl font-bold text-orange-600">
+          ₹{selectedWeight.price}
+        </p>
 
-        <div className="mt-5 flex gap-3">
+        <div className="mt-4 flex flex-wrap gap-2">
+          {weightOptions.map((option) => (
+            <button
+              key={option.weight}
+              type="button"
+              onClick={() => setSelectedWeight(option)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                selectedWeight.weight === option.weight
+                  ? "border-orange-600 bg-orange-600 text-white"
+                  : "border-orange-200 text-zinc-700 hover:bg-orange-50"
+              }`}
+            >
+              {option.weight}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href={`/products/${slug}`}
             className="rounded-full bg-orange-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-700"
@@ -73,16 +103,38 @@ export default function ProductGridCard({
           >
             Quick View
           </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              addToCart({
+                name,
+                slug,
+                price: selectedWeight.price,
+                weight: selectedWeight.weight,
+                image,
+                quantity: 1,
+              });
+
+              toast.success(`${name} ${selectedWeight.weight} added to cart!`);
+            }}
+            className="rounded-full border border-green-300 px-5 py-2 text-sm font-semibold text-green-700 transition hover:bg-green-50"
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
-          {isQuickViewOpen && (
+
+      {isQuickViewOpen && (
         <ProductQuickViewModal
           name={name}
+          slug={slug}
           price={price}
           image={image}
           description={description}
           category={category}
           ingredients={ingredients}
+          weightOptions={weightOptions}
           onClose={() => setIsQuickViewOpen(false)}
         />
       )}

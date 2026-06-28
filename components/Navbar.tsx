@@ -3,9 +3,18 @@
 import Link from "next/link";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
+import CartDrawer from "./CartDrawer";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartItems } = useCart();
+
+const cartCount = cartItems.reduce(
+  (total, item) => total + item.quantity,
+  0
+);
 
   return (
     <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
@@ -50,7 +59,17 @@ export default function Navbar() {
             Order Now
           </button>
 
-          <ShoppingBag className="hidden h-6 w-6 cursor-pointer md:block" />
+          <div className="relative hidden md:block">
+  <button type="button" onClick={() => setIsCartOpen(true)}>
+  <ShoppingBag className="h-6 w-6 cursor-pointer" />
+</button>
+
+  {cartCount > 0 && (
+    <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-xs font-bold text-white">
+      {cartCount}
+    </span>
+  )}
+</div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -94,6 +113,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </header>
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+          </header>
   );
 }
