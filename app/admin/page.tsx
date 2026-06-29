@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { logoutAdmin } from "./actions";
 
 export default async function AdminPage() {
   const [totalProducts, totalOrders, totalCustomers, revenueData] =
@@ -20,26 +21,15 @@ export default async function AdminPage() {
   return (
     <main className="min-h-screen bg-zinc-100 px-6 py-24">
       <section className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-  <div>
-    <h1 className="text-4xl font-bold text-zinc-900">
-      Admin Dashboard
-    </h1>
+        <div>
+          <h1 className="text-4xl font-bold text-zinc-900">
+            Admin Dashboard
+          </h1>
 
-    <p className="mt-3 text-zinc-600">
-      Manage products, orders, and customers for Munna Sweets.
-    </p>
-  </div>
-
-  <form action={logoutAdmin}>
-    <button
-      type="submit"
-      className="rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
-    >
-      Logout
-    </button>
-  </form>
-</div>
+          <p className="mt-3 text-zinc-600">
+            Manage products, orders, and customers for Munna Sweets.
+          </p>
+        </div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-3xl bg-white p-6 shadow-md">
@@ -71,28 +61,54 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          <Link
-            href="/admin/products"
-            className="rounded-3xl bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-          >
-            <h2 className="text-2xl font-bold text-zinc-900">Products</h2>
-            <p className="mt-2 text-zinc-600">Add, edit, and delete sweets.</p>
-          </Link>
+        <div className="mt-10 grid gap-8 lg:grid-cols-3">
+          <div className="rounded-3xl bg-white p-6 shadow-md">
+            <h2 className="text-2xl font-bold text-zinc-900">
+              Quick Actions
+            </h2>
 
-          <Link
-            href="/admin/orders"
-            className="rounded-3xl bg-white p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-          >
-            <h2 className="text-2xl font-bold text-zinc-900">Orders</h2>
-            <p className="mt-2 text-zinc-600">View customer orders.</p>
-          </Link>
+            <div className="mt-6 grid gap-4">
+              <Link
+                href="/admin/products/new"
+                className="rounded-xl bg-orange-600 px-5 py-3 text-center font-semibold text-white hover:bg-orange-700"
+              >
+                ➕ Add Product
+              </Link>
 
-          <div className="rounded-3xl bg-white p-6 shadow-md opacity-70">
-            <h2 className="text-2xl font-bold text-zinc-900">Customers</h2>
-            <p className="mt-2 text-zinc-600">
-              Customer management coming soon.
+              <Link
+                href="/admin/products"
+                className="rounded-xl border border-orange-200 px-5 py-3 text-center font-semibold text-orange-600 hover:bg-orange-50"
+              >
+                🍬 View Products
+              </Link>
+
+              <Link
+                href="/admin/orders"
+                className="rounded-xl border border-orange-200 px-5 py-3 text-center font-semibold text-orange-600 hover:bg-orange-50"
+              >
+                📦 View Orders
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-3xl bg-white p-6 shadow-md lg:col-span-2">
+            <h2 className="text-2xl font-bold text-zinc-900">
+              Welcome Back 👋
+            </h2>
+
+            <p className="mt-4 text-zinc-600">
+              Manage products, monitor orders, and keep your Munna Sweets store
+              updated from one place.
             </p>
+
+            <div className="mt-6 rounded-2xl bg-orange-50 p-5">
+              <p className="text-sm text-orange-700">Tip:</p>
+
+              <p className="mt-2 text-zinc-700">
+                Add new sweets regularly and keep product prices updated so
+                customers always see the latest catalogue.
+              </p>
+            </div>
           </div>
         </div>
       </section>
