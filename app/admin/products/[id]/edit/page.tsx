@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import ImageUploadInput from "@/components/ImageUploadInput";
 import { updateProduct } from "../../actions";
 
 export default async function EditProductPage({
@@ -33,7 +34,13 @@ export default async function EditProductPage({
 
           <input name="name" defaultValue={product.name} className={inputClass} />
           <input name="slug" defaultValue={product.slug} className={inputClass} />
-          <input name="image" defaultValue={product.image} className={inputClass} />
+          <div>
+  <label className="mb-2 block font-semibold text-zinc-800">
+    Product Image
+  </label>
+
+  <ImageUploadInput defaultImage={product.image} />
+</div>
           <input name="category" defaultValue={product.category} className={inputClass} />
           <input name="badge" defaultValue={product.badge ?? ""} className={inputClass} />
 

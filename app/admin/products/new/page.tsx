@@ -1,3 +1,4 @@
+import ImageUploadInput from "@/components/ImageUploadInput";
 import { createProduct } from "../actions";
 
 export default function NewProductPage() {
@@ -10,26 +11,50 @@ export default function NewProductPage() {
         <h1 className="text-4xl font-bold text-zinc-900">Add New Product</h1>
 
         <form action={createProduct} className="mt-8 space-y-5">
-          <input name="name" className={inputClass} placeholder="Product name" />
-          <input name="slug" className={inputClass} placeholder="Slug e.g. motichoor-laddu" />
-          <input name="image" className={inputClass} placeholder="Image path e.g. /gulab-jamun.webp" />
-          <input name="category" className={inputClass} placeholder="Category" />
+          <input name="name" required className={inputClass} placeholder="Product name" />
+
+          <input
+            name="slug"
+            required
+            pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            title="Use lowercase letters, numbers, and hyphens only. Example: motichoor-laddu"
+            className={inputClass}
+            placeholder="Slug e.g. motichoor-laddu"
+          />
+
+         <div>
+  <label className="mb-2 block font-semibold text-zinc-800">
+    Product Image
+  </label>
+
+  <ImageUploadInput />
+</div>
+
+          <input name="category" required className={inputClass} placeholder="Category" />
+
           <input name="badge" className={inputClass} placeholder="Badge e.g. ⭐ Best Seller" />
 
-          <textarea name="description" className={inputClass} placeholder="Description" rows={4} />
+          <textarea
+            name="description"
+            required
+            className={inputClass}
+            placeholder="Description"
+            rows={4}
+          />
 
           <input
             name="ingredients"
+            required
             className={inputClass}
             placeholder="Ingredients separated by comma e.g. Khoya, Sugar, Ghee"
           />
 
           <h2 className="pt-4 text-2xl font-bold text-zinc-900">Weight Prices</h2>
 
-          <input name="price250g" type="number" className={inputClass} placeholder="250g price e.g. 60" />
-          <input name="price500g" type="number" className={inputClass} placeholder="500g price e.g. 110" />
-          <input name="price1kg" type="number" className={inputClass} placeholder="1kg price e.g. 220" />
-          <input name="price2kg" type="number" className={inputClass} placeholder="2kg price e.g. 430" />
+          <input name="price250g" required min="1" type="number" className={inputClass} placeholder="250g price e.g. 60" />
+          <input name="price500g" required min="1" type="number" className={inputClass} placeholder="500g price e.g. 110" />
+          <input name="price1kg" required min="1" type="number" className={inputClass} placeholder="1kg price e.g. 220" />
+          <input name="price2kg" required min="1" type="number" className={inputClass} placeholder="2kg price e.g. 430" />
 
           <button
             type="submit"
