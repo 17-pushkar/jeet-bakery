@@ -1,4 +1,9 @@
+export const dynamic = "force-dynamic";
+
 import { prisma } from "@/lib/prisma";
+import { updateOrderStatus } from "./actions";
+
+const statuses = ["Pending", "Preparing", "Ready", "Delivered"];
 
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
@@ -18,8 +23,15 @@ export default async function AdminOrdersPage() {
   return (
     <main className="min-h-screen bg-zinc-100 px-6 py-24">
       <section className="mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold text-zinc-900">Orders</h1>
-        <p className="mt-2 text-zinc-600">Manage customer orders.</p>
+        <div>
+          <p className="font-semibold uppercase tracking-wide text-orange-500">
+            Admin Panel
+          </p>
+          <h1 className="mt-2 text-4xl font-bold text-zinc-900">Orders</h1>
+          <p className="mt-2 text-zinc-600">
+            View and manage customer orders.
+          </p>
+        </div>
 
         {orders.length === 0 ? (
           <div className="mt-8 rounded-3xl bg-white p-8 text-center shadow-md">
@@ -29,33 +41,85 @@ export default async function AdminOrdersPage() {
           <div className="mt-8 space-y-6">
             {orders.map((order) => (
               <div key={order.id} className="rounded-3xl bg-white p-6 shadow-md">
-                <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-start justify-between gap-4 border-b pb-5">
                   <div>
-                    <h2 className="text-xl font-bold text-zinc-900">
+                    <h2 className="text-2xl font-bold text-zinc-900">
                       {order.customer.name}
                     </h2>
-                    <p className="text-zinc-600">{order.customer.phone}</p>
-                    <p className="text-zinc-600">{order.customer.address}</p>
+
+                    <p className="mt-1 text-zinc-600">
+                      📞 {order.customer.phone}
+                    </p>
+
+                    <p className="mt-1 text-zinc-600">
+                      📍 {order.customer.address}
+                    </p>
+
+                    <p className="mt-2 text-sm text-zinc-500">
+                      Order Date:{" "}
+                      {new Date(order.createdAt).toLocaleString("en-IN")}
+                    </p>
                   </div>
 
                   <div className="text-right">
-                    <p className="font-bold text-orange-600">
-                      ₹{order.totalAmount}
-                    </p>
-                    <p className="text-sm font-semibold text-zinc-600">
+                    <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-bold text-yellow-700">
                       {order.status}
+                    </span>
+
+                    <p className="mt-4 text-2xl font-bold text-orange-600">
+                      ₹{order.totalAmount}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-5 border-t pt-4">
-                  {order.items.map((item) => (
-                    <p key={item.id} className="text-zinc-700">
-                      {item.product.name} - {item.weight} × {item.quantity} = ₹
-                      {item.price * item.quantity}
-                    </p>
-                  ))}
+                <div className="mt-5">
+                  <h3 className="font-bold text-zinc-900">Ordered Items</h3>
+
+                  <div className="mt-3 space-y-3">
+                    {order.items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center justify-between rounded-2xl bg-orange-50 px-4 py-3"
+                      >
+                        <div>
+                          <p className="font-semibold text-zinc-900">
+                            {item.product.name}
+                          </p>
+                          <p className="text-sm text-zinc-600">
+                            {item.weight} × {item.quantity}
+                          </p>
+                        </div>
+
+                        <p className="font-bold text-orange-600">
+                          ₹{item.price * item.quantity}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
+                <form action={updateOrderStatus} className="mt-5 flex flex-wrap items-center gap-3">
+                  <input type="hidden" name="orderId" value={order.id} />
+
+                  <select
+                    name="status"
+                    defaultValue={order.status}
+                    className="rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm font-medium text-zinc-700 outline-none focus:border-orange-500"
+                  >
+                    {statuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    type="submit"
+                    className="rounded-xl bg-orange-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
+                  >
+                    Update Status
+                  </button>
+                </form>
               </div>
             ))}
           </div>
