@@ -4,6 +4,25 @@ import { prisma } from "@/lib/prisma";
 import { updateOrderStatus } from "./actions";
 
 const statuses = ["Pending", "Preparing", "Ready", "Delivered"];
+function getStatusClass(status: string) {
+  if (status === "Pending") {
+    return "bg-yellow-100 text-yellow-700";
+  }
+
+  if (status === "Preparing") {
+    return "bg-blue-100 text-blue-700";
+  }
+
+  if (status === "Ready") {
+    return "bg-purple-100 text-purple-700";
+  }
+
+  if (status === "Delivered") {
+    return "bg-green-100 text-green-700";
+  }
+
+  return "bg-zinc-100 text-zinc-700";
+}
 
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
@@ -62,9 +81,13 @@ export default async function AdminOrdersPage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-bold text-yellow-700">
-                      {order.status}
-                    </span>
+                   <span
+  className={`rounded-full px-4 py-2 text-sm font-bold ${getStatusClass(
+    order.status
+  )}`}
+>
+  {order.status}
+</span>
 
                     <p className="mt-4 text-2xl font-bold text-orange-600">
                       ₹{order.totalAmount}

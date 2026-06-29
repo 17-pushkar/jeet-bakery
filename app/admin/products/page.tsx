@@ -3,8 +3,22 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import DeleteProductButton from "@/components/DeleteProductButton";
 
-export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({
+export default async function AdminProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string }>;
+}) {
+  const { search } = await searchParams;
+ const products = await prisma.product.findMany({
+  where: search
+    ? {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { category: { contains: search, mode: "insensitive" } },
+          { slug: { contains: search, mode: "insensitive" } },
+        ],
+      }
+    : undefined,
     include: {
       weightOptions: true,
     },
@@ -16,22 +30,51 @@ export default async function AdminProductsPage() {
   return (
     <main className="min-h-screen bg-zinc-100 px-6 py-24">
       <section className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="font-semibold uppercase tracking-wide text-orange-500">
-              Admin Panel
-            </p>
-            <h1 className="mt-2 text-4xl font-bold text-zinc-900">Products</h1>
-            <p className="mt-2 text-zinc-600">Manage all sweets products.</p>
-          </div>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+  <div>
+    <p className="font-semibold uppercase tracking-wide text-orange-500">
+      Admin Panel
+    </p>
 
-          <Link
-            href="/admin/products/new"
-            className="rounded-full bg-orange-600 px-6 py-3 font-semibold text-white transition hover:bg-orange-700"
-          >
-            Add Product
-          </Link>
-        </div>
+    <h1 className="mt-2 text-4xl font-bold text-zinc-900">
+      Products
+    </h1>
+
+    <p className="mt-2 text-zinc-600">
+      Manage all sweets products.
+    </p>
+  </div>
+
+  <div className="flex flex-wrap items-center gap-4">
+   <div className="flex items-center gap-3">
+  <form action="/admin/products">
+    <input
+      type="text"
+      name="search"
+      defaultValue={search ?? ""}
+      placeholder="🔍 Search products..."
+      className="w-72 rounded-xl border border-orange-200 bg-white px-4 py-3 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+    />
+  </form>
+
+  {search && (
+    <Link
+      href="/admin/products"
+      className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-600 hover:bg-zinc-50"
+    >
+      Clear
+    </Link>
+  )}
+</div>
+
+    <Link
+      href="/admin/products/new"
+      className="rounded-full bg-orange-600 px-6 py-3 font-semibold text-white transition hover:bg-orange-700"
+    >
+      Add Product
+    </Link>
+  </div>
+</div>
 
         {products.length === 0 ? (
           <div className="mt-8 rounded-3xl bg-white p-8 text-center shadow-md">
