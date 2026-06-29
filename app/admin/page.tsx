@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { logoutAdmin } from "./actions";
 
 export default async function AdminPage() {
   const [totalProducts, totalOrders, totalCustomers, revenueData] =
@@ -19,10 +20,26 @@ export default async function AdminPage() {
   return (
     <main className="min-h-screen bg-zinc-100 px-6 py-24">
       <section className="mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold text-zinc-900">Admin Dashboard</h1>
-        <p className="mt-3 text-zinc-600">
-          Manage products, orders, and customers for Munna Sweets.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+  <div>
+    <h1 className="text-4xl font-bold text-zinc-900">
+      Admin Dashboard
+    </h1>
+
+    <p className="mt-3 text-zinc-600">
+      Manage products, orders, and customers for Munna Sweets.
+    </p>
+  </div>
+
+  <form action={logoutAdmin}>
+    <button
+      type="submit"
+      className="rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+    >
+      Logout
+    </button>
+  </form>
+</div>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-3xl bg-white p-6 shadow-md">
