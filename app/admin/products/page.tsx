@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { deleteProduct } from "./actions";
+import DeleteProductButton from "@/components/DeleteProductButton";
 
 export default async function AdminProductsPage() {
   const products = await prisma.product.findMany({
@@ -110,16 +110,10 @@ export default async function AdminProductsPage() {
                       Edit
                     </Link>
 
-                    <form action={deleteProduct}>
-                      <input type="hidden" name="id" value={product.id} />
-
-                      <button
-                        type="submit"
-                        className="rounded-full bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100"
-                      >
-                        Delete
-                      </button>
-                    </form>
+                   <DeleteProductButton
+  productId={product.id}
+  productName={product.name}
+/>
                   </div>
                 </div>
               );
