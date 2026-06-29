@@ -11,6 +11,7 @@ export async function createProduct(formData: FormData) {
   const badge = String(formData.get("badge"));
   const description = String(formData.get("description"));
   const ingredientsText = String(formData.get("ingredients"));
+  const stock = Number(formData.get("stock"));
 
   const ingredients = ingredientsText
     .split(",")
@@ -27,6 +28,7 @@ export async function createProduct(formData: FormData) {
       description,
       ingredients,
       featured: true,
+      stock,
       weightOptions: {
         create: [
           { weight: "250g", price: Number(formData.get("price250g")) },
@@ -67,6 +69,7 @@ export async function updateProduct(formData: FormData) {
       slug: String(formData.get("slug")),
       image: String(formData.get("image")),
       category: String(formData.get("category")),
+      stock: Number(formData.get("stock")),
       badge: String(formData.get("badge")),
       description: String(formData.get("description")),
       ingredients,

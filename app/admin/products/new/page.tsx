@@ -31,6 +31,14 @@ export default function NewProductPage() {
 </div>
 
           <input name="category" required className={inputClass} placeholder="Category" />
+          <input
+  name="stock"
+  required
+  min="0"
+  type="number"
+  className={inputClass}
+  placeholder="Stock quantity e.g. 25"
+/>
 
           <input name="badge" className={inputClass} placeholder="Badge e.g. ⭐ Best Seller" />
 

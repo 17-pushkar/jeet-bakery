@@ -112,13 +112,14 @@ export default async function ProductDetailsPage({
           </div>
 
           <ProductDetailsActions
-            product={{
-              name: product.name,
-              slug: product.slug,
-              image: product.image,
-              weightOptions: product.weightOptions,
-            }}
-          />
+  product={{
+    name: product.name,
+    slug: product.slug,
+    image: product.image,
+    stock: product.stock,
+    weightOptions: product.weightOptions,
+  }}
+/>
         </div>
       </section>
 

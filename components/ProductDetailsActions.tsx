@@ -16,6 +16,7 @@ type ProductDetailsActionsProps = {
     name: string;
     slug: string;
     image: string;
+    stock: number;
     weightOptions: WeightOption[];
   };
 };
@@ -53,7 +54,8 @@ export default function ProductDetailsActions({
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row">
         <button
-          onClick={() => {
+  disabled={product.stock === 0}
+  onClick={() => {
             addToCart({
               name: product.name,
               slug: product.slug,
@@ -67,10 +69,14 @@ export default function ProductDetailsActions({
               `${product.name} ${selectedWeight.weight} added to cart!`
             );
           }}
-          className="flex items-center justify-center gap-2 rounded-full bg-orange-500 px-8 py-4 font-semibold text-white transition hover:bg-orange-600"
+          className={`flex items-center justify-center gap-2 rounded-full px-8 py-4 font-semibold text-white transition ${
+  product.stock === 0
+    ? "cursor-not-allowed bg-zinc-400"
+    : "bg-orange-500 hover:bg-orange-600"
+}`}
         >
           <ShoppingBag className="h-5 w-5" />
-          Add to Cart
+          {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
         </button>
 
         <Link

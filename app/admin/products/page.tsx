@@ -82,10 +82,11 @@ export default async function AdminProductsPage({
           </div>
         ) : (
           <div className="mt-8 overflow-hidden rounded-3xl bg-white shadow-md">
-            <div className="hidden grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr] gap-4 border-b bg-orange-50 px-6 py-4 text-sm font-bold text-zinc-700 md:grid">
+            <div className="hidden grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1.5fr] gap-4 border-b bg-orange-50 px-6 py-4 text-sm font-bold text-zinc-700 md:grid">
               <p>Product</p>
               <p>Category</p>
               <p>1kg Price</p>
+              <p>Stock</p>
               <p>Badge</p>
               <p className="text-right">Actions</p>
             </div>
@@ -98,7 +99,7 @@ export default async function AdminProductsPage({
               return (
                 <div
                   key={product.id}
-                  className="grid gap-4 border-b p-5 last:border-b-0 md:grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr] md:items-center md:px-6"
+                  className="grid gap-4 border-b p-5 last:border-b-0 md:grid-cols-[1.5fr_1fr_1fr_1fr_1fr_1.5fr] md:items-center md:px-6"
                 >
                   <div className="flex items-center gap-4">
                     <div className="relative h-16 w-16 overflow-hidden rounded-2xl bg-orange-50">
@@ -127,6 +128,20 @@ export default async function AdminProductsPage({
                   <p className="text-sm font-bold text-orange-600">
                     ₹{price}
                   </p>
+
+                  <div>
+  <span
+    className={`rounded-full px-3 py-1 text-xs font-bold ${
+      product.stock === 0
+        ? "bg-red-100 text-red-700"
+        : product.stock <= 10
+        ? "bg-yellow-100 text-yellow-700"
+        : "bg-green-100 text-green-700"
+    }`}
+  >
+    {product.stock} in stock
+  </span>
+</div>
 
                   <div>
                     {product.badge ? (

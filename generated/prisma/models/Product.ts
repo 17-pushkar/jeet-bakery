@@ -20,8 +20,18 @@ export type ProductModel = runtime.Types.Result.DefaultSelection<Prisma.$Product
 
 export type AggregateProduct = {
   _count: ProductCountAggregateOutputType | null
+  _avg: ProductAvgAggregateOutputType | null
+  _sum: ProductSumAggregateOutputType | null
   _min: ProductMinAggregateOutputType | null
   _max: ProductMaxAggregateOutputType | null
+}
+
+export type ProductAvgAggregateOutputType = {
+  stock: number | null
+}
+
+export type ProductSumAggregateOutputType = {
+  stock: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -33,6 +43,7 @@ export type ProductMinAggregateOutputType = {
   category: string | null
   badge: string | null
   featured: boolean | null
+  stock: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +57,7 @@ export type ProductMaxAggregateOutputType = {
   category: string | null
   badge: string | null
   featured: boolean | null
+  stock: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,11 +72,20 @@ export type ProductCountAggregateOutputType = {
   badge: number
   ingredients: number
   featured: number
+  stock: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type ProductAvgAggregateInputType = {
+  stock?: true
+}
+
+export type ProductSumAggregateInputType = {
+  stock?: true
+}
 
 export type ProductMinAggregateInputType = {
   id?: true
@@ -75,6 +96,7 @@ export type ProductMinAggregateInputType = {
   category?: true
   badge?: true
   featured?: true
+  stock?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +110,7 @@ export type ProductMaxAggregateInputType = {
   category?: true
   badge?: true
   featured?: true
+  stock?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,6 +125,7 @@ export type ProductCountAggregateInputType = {
   badge?: true
   ingredients?: true
   featured?: true
+  stock?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -145,6 +169,18 @@ export type ProductAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProductAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProductSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProductMinAggregateInputType
@@ -175,6 +211,8 @@ export type ProductGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProductCountAggregateInputType | true
+  _avg?: ProductAvgAggregateInputType
+  _sum?: ProductSumAggregateInputType
   _min?: ProductMinAggregateInputType
   _max?: ProductMaxAggregateInputType
 }
@@ -189,9 +227,12 @@ export type ProductGroupByOutputType = {
   badge: string | null
   ingredients: string[]
   featured: boolean
+  stock: number
   createdAt: Date
   updatedAt: Date
   _count: ProductCountAggregateOutputType | null
+  _avg: ProductAvgAggregateOutputType | null
+  _sum: ProductSumAggregateOutputType | null
   _min: ProductMinAggregateOutputType | null
   _max: ProductMaxAggregateOutputType | null
 }
@@ -224,6 +265,7 @@ export type ProductWhereInput = {
   badge?: Prisma.StringNullableFilter<"Product"> | string | null
   ingredients?: Prisma.StringNullableListFilter<"Product">
   featured?: Prisma.BoolFilter<"Product"> | boolean
+  stock?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   weightOptions?: Prisma.WeightOptionListRelationFilter
@@ -240,6 +282,7 @@ export type ProductOrderByWithRelationInput = {
   badge?: Prisma.SortOrderInput | Prisma.SortOrder
   ingredients?: Prisma.SortOrder
   featured?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   weightOptions?: Prisma.WeightOptionOrderByRelationAggregateInput
@@ -259,6 +302,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   badge?: Prisma.StringNullableFilter<"Product"> | string | null
   ingredients?: Prisma.StringNullableListFilter<"Product">
   featured?: Prisma.BoolFilter<"Product"> | boolean
+  stock?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   weightOptions?: Prisma.WeightOptionListRelationFilter
@@ -275,11 +319,14 @@ export type ProductOrderByWithAggregationInput = {
   badge?: Prisma.SortOrderInput | Prisma.SortOrder
   ingredients?: Prisma.SortOrder
   featured?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
+  _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
   _min?: Prisma.ProductMinOrderByAggregateInput
+  _sum?: Prisma.ProductSumOrderByAggregateInput
 }
 
 export type ProductScalarWhereWithAggregatesInput = {
@@ -295,6 +342,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   badge?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   ingredients?: Prisma.StringNullableListFilter<"Product">
   featured?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  stock?: Prisma.IntWithAggregatesFilter<"Product"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
@@ -309,6 +357,7 @@ export type ProductCreateInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   weightOptions?: Prisma.WeightOptionCreateNestedManyWithoutProductInput
@@ -325,6 +374,7 @@ export type ProductUncheckedCreateInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   weightOptions?: Prisma.WeightOptionUncheckedCreateNestedManyWithoutProductInput
@@ -341,6 +391,7 @@ export type ProductUpdateInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weightOptions?: Prisma.WeightOptionUpdateManyWithoutProductNestedInput
@@ -357,6 +408,7 @@ export type ProductUncheckedUpdateInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weightOptions?: Prisma.WeightOptionUncheckedUpdateManyWithoutProductNestedInput
@@ -373,6 +425,7 @@ export type ProductCreateManyInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -387,6 +440,7 @@ export type ProductUpdateManyMutationInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -401,6 +455,7 @@ export type ProductUncheckedUpdateManyInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -423,8 +478,13 @@ export type ProductCountOrderByAggregateInput = {
   badge?: Prisma.SortOrder
   ingredients?: Prisma.SortOrder
   featured?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProductAvgOrderByAggregateInput = {
+  stock?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -436,6 +496,7 @@ export type ProductMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   badge?: Prisma.SortOrder
   featured?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -449,8 +510,13 @@ export type ProductMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   badge?: Prisma.SortOrder
   featured?: Prisma.SortOrder
+  stock?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProductSumOrderByAggregateInput = {
+  stock?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -477,6 +543,14 @@ export type ProductUpdateingredientsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -521,6 +595,7 @@ export type ProductCreateWithoutWeightOptionsInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
@@ -536,6 +611,7 @@ export type ProductUncheckedCreateWithoutWeightOptionsInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -567,6 +643,7 @@ export type ProductUpdateWithoutWeightOptionsInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
@@ -582,6 +659,7 @@ export type ProductUncheckedUpdateWithoutWeightOptionsInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -597,6 +675,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   weightOptions?: Prisma.WeightOptionCreateNestedManyWithoutProductInput
@@ -612,6 +691,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   badge?: string | null
   ingredients?: Prisma.ProductCreateingredientsInput | string[]
   featured?: boolean
+  stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   weightOptions?: Prisma.WeightOptionUncheckedCreateNestedManyWithoutProductInput
@@ -643,6 +723,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weightOptions?: Prisma.WeightOptionUpdateManyWithoutProductNestedInput
@@ -658,6 +739,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   badge?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingredients?: Prisma.ProductUpdateingredientsInput | string[]
   featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   weightOptions?: Prisma.WeightOptionUncheckedUpdateManyWithoutProductNestedInput
@@ -713,6 +795,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   badge?: boolean
   ingredients?: boolean
   featured?: boolean
+  stock?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   weightOptions?: boolean | Prisma.Product$weightOptionsArgs<ExtArgs>
@@ -730,6 +813,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   badge?: boolean
   ingredients?: boolean
   featured?: boolean
+  stock?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["product"]>
@@ -744,6 +828,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   badge?: boolean
   ingredients?: boolean
   featured?: boolean
+  stock?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["product"]>
@@ -758,11 +843,12 @@ export type ProductSelectScalar = {
   badge?: boolean
   ingredients?: boolean
   featured?: boolean
+  stock?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "image" | "category" | "badge" | "ingredients" | "featured" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "image" | "category" | "badge" | "ingredients" | "featured" | "stock" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   weightOptions?: boolean | Prisma.Product$weightOptionsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
@@ -787,6 +873,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     badge: string | null
     ingredients: string[]
     featured: boolean
+    stock: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["product"]>
@@ -1223,6 +1310,7 @@ export interface ProductFieldRefs {
   readonly badge: Prisma.FieldRef<"Product", 'String'>
   readonly ingredients: Prisma.FieldRef<"Product", 'String[]'>
   readonly featured: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly stock: Prisma.FieldRef<"Product", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
 }

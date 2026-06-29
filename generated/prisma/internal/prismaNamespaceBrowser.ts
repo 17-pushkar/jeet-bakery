@@ -85,6 +85,7 @@ export const ProductScalarFieldEnum = {
   badge: 'badge',
   ingredients: 'ingredients',
   featured: 'featured',
+  stock: 'stock',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

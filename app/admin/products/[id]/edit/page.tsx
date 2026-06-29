@@ -42,6 +42,14 @@ export default async function EditProductPage({
   <ImageUploadInput defaultImage={product.image} />
 </div>
           <input name="category" defaultValue={product.category} className={inputClass} />
+          <input
+  name="stock"
+  type="number"
+  min="0"
+  defaultValue={product.stock}
+  className={inputClass}
+  placeholder="Stock quantity"
+/>
           <input name="badge" defaultValue={product.badge ?? ""} className={inputClass} />
 
           <textarea
