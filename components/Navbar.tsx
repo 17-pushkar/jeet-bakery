@@ -54,27 +54,33 @@ const cartCount = cartItems.reduce(
 </Link>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button className="hidden rounded-xl bg-orange-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-orange-700 hover:shadow-xl md:block">
             Order Now
           </button>
 
-          <div className="relative">
-  <button type="button" onClick={() => setIsCartOpen(true)}>
-  <ShoppingBag className="h-6 w-6 cursor-pointer" />
-</button>
+         <div className="relative">
+  <button
+    type="button"
+    onClick={() => setIsCartOpen(true)}
+    className="rounded-full p-2 transition hover:bg-orange-100"
+    aria-label="Open cart"
+  >
+    <ShoppingBag className="h-6 w-6 text-zinc-800" />
+  </button>
 
   {cartCount > 0 && (
-    <span className="absolute -right-3 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-xs font-bold text-white">
+    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-xs font-bold text-white">
       {cartCount}
     </span>
   )}
 </div>
 
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden"
-          >
+  onClick={() => setIsOpen(!isOpen)}
+  className="rounded-full p-2 transition hover:bg-orange-100 md:hidden"
+  aria-label="Open menu"
+>
             {isOpen ? (
               <X className="h-7 w-7" />
             ) : (
