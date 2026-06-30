@@ -1,7 +1,28 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import cloudinary from "@/lib/cloudinary";
 import { redirect } from "next/navigation";
+
+function getCloudinaryPublicId(imageUrl: string) {
+  if (!imageUrl.includes("res.cloudinary.com")) return null;
+
+  const parts = imageUrl.split("/upload/");
+  if (!parts[1]) return null;
+
+  const pathAfterUpload = parts[1].replace(/^v\d+\//, "");
+  const publicId = pathAfterUpload.replace(/\.[^/.]+$/, "");
+
+  return publicId;
+}
+
+async function deleteCloudinaryImage(imageUrl: string) {
+  const publicId = getCloudinaryPublicId(imageUrl);
+
+  if (!publicId) return;
+
+  await cloudinary.uploader.destroy(publicId);
+}
 
 export async function createProduct(formData: FormData) {
   const name = String(formData.get("name"));
@@ -46,6 +67,16 @@ export async function createProduct(formData: FormData) {
 export async function deleteProduct(formData: FormData) {
   const id = String(formData.get("id"));
 
+  const product = await prisma.product.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (product?.image) {
+    await deleteCloudinaryImage(product.image);
+  }
+
   await prisma.product.delete({
     where: {
       id,
@@ -54,8 +85,16 @@ export async function deleteProduct(formData: FormData) {
 
   redirect("/admin/products");
 }
+
 export async function updateProduct(formData: FormData) {
   const id = String(formData.get("id"));
+  const newImage = String(formData.get("image"));
+
+  const existingProduct = await prisma.product.findUnique({
+    where: {
+      id,
+    },
+  });
 
   const ingredients = String(formData.get("ingredients"))
     .split(",")
@@ -67,7 +106,7 @@ export async function updateProduct(formData: FormData) {
     data: {
       name: String(formData.get("name")),
       slug: String(formData.get("slug")),
-      image: String(formData.get("image")),
+      image: newImage,
       category: String(formData.get("category")),
       stock: Number(formData.get("stock")),
       badge: String(formData.get("badge")),
@@ -84,6 +123,10 @@ export async function updateProduct(formData: FormData) {
       },
     },
   });
+
+  if (existingProduct?.image && existingProduct.image !== newImage) {
+    await deleteCloudinaryImage(existingProduct.image);
+  }
 
   redirect("/admin/products");
 }
