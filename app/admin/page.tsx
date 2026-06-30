@@ -91,7 +91,7 @@ export default async function AdminPage() {
           </div>
 
           <Link
-            href="/admin/products"
+  href="/admin/products?stock=low"
             className="rounded-3xl bg-yellow-50 p-6 shadow-md transition hover:bg-yellow-100"
           >
             <p className="text-sm font-medium text-yellow-700">

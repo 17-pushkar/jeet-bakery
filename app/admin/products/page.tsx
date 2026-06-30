@@ -6,19 +6,28 @@ import DeleteProductButton from "@/components/DeleteProductButton";
 export default async function AdminProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string }>;
+  searchParams: Promise<{ search?: string; stock?: string }>;
 }) {
-  const { search } = await searchParams;
+  const { search, stock } = await searchParams;
  const products = await prisma.product.findMany({
-  where: search
+  where: {
+  ...(search
     ? {
         OR: [
-          { name: { contains: search, mode: "insensitive" } },
-          { category: { contains: search, mode: "insensitive" } },
-          { slug: { contains: search, mode: "insensitive" } },
+          { name: { contains: search, mode: "insensitive" as const } },
+          { category: { contains: search, mode: "insensitive" as const } },
+          { slug: { contains: search, mode: "insensitive" as const } },
         ],
       }
-    : undefined,
+    : {}),
+  ...(stock === "low"
+    ? {
+        stock: {
+          lte: 10,
+        },
+      }
+    : {}),
+},
     include: {
       weightOptions: true,
     },
@@ -57,14 +66,25 @@ export default async function AdminProductsPage({
     />
   </form>
 
-  {search && (
-    <Link
-      href="/admin/products"
-      className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-600 hover:bg-zinc-50"
-    >
-      Clear
-    </Link>
-  )}
+  {(search || stock) && (
+  <Link
+    href="/admin/products"
+    className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-600 hover:bg-zinc-50"
+  >
+    Clear
+  </Link>
+)}
+
+<Link
+  href="/admin/products?stock=low"
+  className={`rounded-xl px-4 py-3 text-sm font-semibold ${
+    stock === "low"
+      ? "bg-yellow-500 text-white"
+      : "border border-yellow-200 bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
+  }`}
+>
+  Low Stock
+</Link>
 </div>
 
     <Link
