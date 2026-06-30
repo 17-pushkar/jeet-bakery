@@ -59,7 +59,7 @@ const cartCount = cartItems.reduce(
             Order Now
           </button>
 
-          <div className="relative hidden md:block">
+          <div className="relative">
   <button type="button" onClick={() => setIsCartOpen(true)}>
   <ShoppingBag className="h-6 w-6 cursor-pointer" />
 </button>
