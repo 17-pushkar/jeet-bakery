@@ -10,6 +10,7 @@ export default async function AdminPage() {
     totalOrders,
     totalCustomers,
     revenueData,
+    lowStockProducts,
     recentOrders,
     latestProducts,
   ] = await Promise.all([
@@ -19,6 +20,13 @@ export default async function AdminPage() {
     prisma.order.aggregate({
       _sum: {
         totalAmount: true,
+      },
+    }),
+    prisma.product.count({
+      where: {
+        stock: {
+          lte: 10,
+        },
       },
     }),
     prisma.order.findMany({
@@ -31,11 +39,11 @@ export default async function AdminPage() {
       },
     }),
     prisma.product.findMany({
-  take: 5,
-  orderBy: {
-    createdAt: "desc",
-  },
-}),
+      take: 5,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
   ]);
 
   const totalRevenue = revenueData._sum.totalAmount || 0;
@@ -53,7 +61,7 @@ export default async function AdminPage() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           <div className="rounded-3xl bg-white p-6 shadow-md">
             <p className="text-sm font-medium text-zinc-500">Total Products</p>
             <h2 className="mt-3 text-3xl font-bold text-zinc-900">
@@ -81,6 +89,18 @@ export default async function AdminPage() {
               ₹{totalRevenue}
             </h2>
           </div>
+
+          <Link
+            href="/admin/products"
+            className="rounded-3xl bg-yellow-50 p-6 shadow-md transition hover:bg-yellow-100"
+          >
+            <p className="text-sm font-medium text-yellow-700">
+              Low Stock Products
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-yellow-800">
+              {lowStockProducts}
+            </h2>
+          </Link>
         </div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-3">
@@ -163,7 +183,8 @@ export default async function AdminPage() {
             )}
           </div>
         </div>
-                <div className="mt-8 rounded-3xl bg-white p-6 shadow-md">
+
+        <div className="mt-8 rounded-3xl bg-white p-6 shadow-md">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-2xl font-bold text-zinc-900">
               Latest Products
@@ -185,39 +206,39 @@ export default async function AdminPage() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {latestProducts.map((product) => (
                 <div
-  key={product.id}
-  className="overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50"
->
-  <div className="relative h-36 w-full">
-    <Image
-      src={product.image}
-      alt={product.name}
-      fill
-      className="object-cover"
-    />
-  </div>
+                  key={product.id}
+                  className="overflow-hidden rounded-2xl border border-zinc-100 bg-zinc-50"
+                >
+                  <div className="relative h-36 w-full">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-  <div className="p-4">
-    <p className="font-semibold text-zinc-900">
-      {product.name}
-    </p>
+                  <div className="p-4">
+                    <p className="font-semibold text-zinc-900">
+                      {product.name}
+                    </p>
 
-    <p className="mt-1 text-sm text-zinc-500">
-      {product.category}
-    </p>
+                    <p className="mt-1 text-sm text-zinc-500">
+                      {product.category}
+                    </p>
 
-    <p className="mt-3 text-sm font-medium text-orange-600">
-      {product.featured ? "Featured Product" : "Regular Product"}
-    </p>
+                    <p className="mt-3 text-sm font-medium text-orange-600">
+                      {product.featured ? "Featured Product" : "Regular Product"}
+                    </p>
 
-    <Link
-      href={`/admin/products/${product.id}/edit`}
-      className="mt-4 block rounded-xl bg-orange-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-orange-700"
-    >
-      Edit Product
-    </Link>
-  </div>
-</div>
+                    <Link
+                      href={`/admin/products/${product.id}/edit`}
+                      className="mt-4 block rounded-xl bg-orange-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-orange-700"
+                    >
+                      Edit Product
+                    </Link>
+                  </div>
+                </div>
               ))}
             </div>
           )}
