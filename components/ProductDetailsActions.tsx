@@ -24,23 +24,27 @@ type ProductDetailsActionsProps = {
 export default function ProductDetailsActions({
   product,
 }: ProductDetailsActionsProps) {
-  const [selectedWeight, setSelectedWeight] = useState(product.weightOptions[2]);
+  const [selectedWeight, setSelectedWeight] = useState(
+    product.weightOptions[0] ?? { weight: "Default", price: 0 }
+  );
+
   const { addToCart } = useCart();
+  const isOutOfStock = product.stock <= 0;
 
   return (
     <div className="mt-8">
-      <h2 className="text-lg font-semibold text-zinc-900">Select Weight</h2>
+      <h2 className="text-xl font-bold text-[#4E342E]">Select Option</h2>
 
-      <div className="mt-3 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         {product.weightOptions.map((option) => (
           <button
             key={option.weight}
             type="button"
             onClick={() => setSelectedWeight(option)}
-            className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+            className={`rounded-full border px-5 py-2.5 text-sm font-bold uppercase tracking-[0.14em] transition ${
               selectedWeight.weight === option.weight
-                ? "border-orange-600 bg-orange-600 text-white"
-                : "border-orange-200 text-zinc-700 hover:bg-orange-50"
+                ? "border-[#4E342E] bg-[#4E342E] text-white"
+                : "border-[#E8D9C8] bg-[#FFF9F3] text-[#4E342E] hover:border-[#C89B3C] hover:bg-[#F6E7D8]"
             }`}
           >
             {option.weight}
@@ -48,14 +52,16 @@ export default function ProductDetailsActions({
         ))}
       </div>
 
-      <p className="mt-5 text-2xl font-bold text-orange-600">
+      <p className="mt-6 text-3xl font-bold text-[#C89B3C]">
         ₹{selectedWeight.price}
       </p>
 
-      <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+      <div className="mt-7 flex flex-col gap-4 sm:flex-row">
         <button
-  disabled={product.stock === 0}
-  onClick={() => {
+          disabled={isOutOfStock}
+          onClick={() => {
+            if (isOutOfStock) return;
+
             addToCart({
               name: product.name,
               slug: product.slug,
@@ -69,21 +75,21 @@ export default function ProductDetailsActions({
               `${product.name} ${selectedWeight.weight} added to cart!`
             );
           }}
-          className={`flex items-center justify-center gap-2 rounded-full px-8 py-4 font-semibold text-white transition ${
-  product.stock === 0
-    ? "cursor-not-allowed bg-zinc-400"
-    : "bg-orange-500 hover:bg-orange-600"
-}`}
+          className={`flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] transition ${
+            isOutOfStock
+              ? "cursor-not-allowed bg-zinc-300 text-zinc-500"
+              : "bg-[#4E342E] text-white hover:bg-[#C89B3C]"
+          }`}
         >
           <ShoppingBag className="h-5 w-5" />
-          {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+          {isOutOfStock ? "Out of Stock" : "Add to Cart"}
         </button>
 
         <Link
           href="/products"
-          className="rounded-full border border-orange-300 px-8 py-4 text-center font-semibold text-orange-600 transition hover:bg-orange-100"
+          className="rounded-full border border-[#E8D9C8] px-8 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#4E342E] transition hover:border-[#C89B3C] hover:bg-[#F6E7D8]"
         >
-          Back to Products
+          Back to Menu
         </Link>
       </div>
     </div>

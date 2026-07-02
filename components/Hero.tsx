@@ -1,76 +1,82 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Clock, Star } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-amber-50 py-24">
-      <div className="absolute -left-32 -top-32 h-72 w-72 rounded-full bg-orange-200/40 blur-3xl"></div>
-      <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-yellow-200/40 blur-3xl"></div>
+    <section className="relative overflow-hidden bg-[#FFF9F3]">
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#C89B3C]/10 blur-3xl" />
+      <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#4E342E]/10 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2">
+      <div className="relative mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:px-8">
         <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-orange-600 shadow">
-            <Star className="h-4 w-4 fill-orange-500" />
-            Trusted Sweet Shop Since 1995
-          </div>
-
-          <h1 className="text-5xl font-extrabold leading-tight tracking-tight text-gray-950 lg:text-7xl">
-            Fresh Indian
-            <span className="block text-orange-600">Sweets Daily</span>
-          </h1>
-
-          <p className="mt-6 max-w-xl text-xl leading-8 text-gray-600">
-            Celebrate every occasion with handcrafted sweets made from premium
-            ingredients, pure taste, and traditional recipes.
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+            Luxury Bakery • Premium Café • Celebration Lounge
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-4">
+          <h1 className="max-w-3xl text-5xl font-bold leading-tight text-[#4E342E] md:text-7xl">
+            Celebrate Every Moment With Jeet Bakery
+          </h1>
+
+          <p className="mt-6 max-w-xl text-lg leading-8 text-[#1F1F1F]/75">
+            Fresh cakes, pastries, fast food, party supplies, birthday setups,
+            and party hall booking — everything for your perfect celebration
+            under one premium roof.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/products"
-              className="flex items-center gap-2 rounded-xl bg-orange-600 px-7 py-4 font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-orange-700"
+              className="rounded-full bg-[#4E342E] px-8 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg transition hover:bg-[#3A241F]"
             >
               Explore Menu
-              <ArrowRight className="h-5 w-5" />
             </Link>
 
             <Link
-              href="/#contact"
-              className="rounded-xl border border-orange-600 bg-white px-7 py-4 font-semibold text-orange-600 transition hover:bg-orange-50"
+              href="/#party-hall"
+              className="rounded-full border border-[#C89B3C] bg-white px-8 py-4 text-center text-sm font-bold uppercase tracking-[0.2em] text-[#4E342E] shadow-sm transition hover:bg-[#F6E7D8]"
             >
-              Contact Us
+              Book Party Hall
             </Link>
           </div>
 
-          <div className="mt-10 grid max-w-xl gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl bg-white p-4 shadow">
-              <BadgeCheck className="mb-2 h-6 w-6 text-orange-600" />
-              <p className="font-bold">Pure Quality</p>
-            </div>
-
-            <div className="rounded-2xl bg-white p-4 shadow">
-              <Clock className="mb-2 h-6 w-6 text-orange-600" />
-              <p className="font-bold">Fresh Daily</p>
-            </div>
-
-            <div className="rounded-2xl bg-white p-4 shadow">
-              <Star className="mb-2 h-6 w-6 text-orange-600" />
-              <p className="font-bold">4.9 Rating</p>
-            </div>
+          <div className="mt-10 grid max-w-lg grid-cols-3 gap-4">
+            {[
+              "Custom Cakes",
+              "Fast Food",
+              "Party Setup",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-3xl border border-[#E8D9C8] bg-white/80 p-4 text-center shadow-sm"
+              >
+                <p className="text-sm font-semibold text-[#4E342E]">{item}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="relative">
-          <div className="absolute -inset-6 rounded-[2.5rem] bg-orange-300/20 blur-2xl"></div>
+          <div className="absolute -left-5 -top-5 h-full w-full rounded-[3rem] border border-[#C89B3C]/40" />
 
-          <Image
-            src="/hero-sweets.webp"
-            alt="Fresh Indian sweets"
-            width={650}
-            height={650}
-            priority
-            className="relative w-full rounded-[2rem] border-8 border-white object-cover shadow-2xl transition duration-500 hover:scale-105 hover:rotate-1"
-          />
+          <div className="relative overflow-hidden rounded-[3rem] border border-[#E8D9C8] bg-white p-3 shadow-2xl">
+            <Image
+              src="/images/jeet-bakery/hero.webp"
+              alt="Premium sweets and bakery items at Jeet Bakery"
+              width={900}
+              height={900}
+              priority
+              className="h-[420px] w-full rounded-[2.5rem] object-cover md:h-[560px]"
+            />
+          </div>
+
+          <div className="absolute -bottom-6 left-6 rounded-3xl border border-[#E8D9C8] bg-white px-6 py-5 shadow-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#C89B3C]">
+              Premium Orders
+            </p>
+            <p className="mt-1 text-2xl font-bold text-[#4E342E]">
+              Cakes • Snacks • Parties
+            </p>
+          </div>
         </div>
       </div>
     </section>

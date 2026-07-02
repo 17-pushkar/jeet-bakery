@@ -1,56 +1,67 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  variable: "--font-playfair",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Munna Sweets | Fresh Indian Sweets & Namkeen",
-    template: "%s | Munna Sweets",
+    default: "Jeet Bakery | Cakes, Fast Food & Party Hall Booking",
+    template: "%s | Jeet Bakery",
   },
   description:
-    "Munna Sweets offers fresh Indian sweets, namkeen, gift boxes, and festive specials prepared with premium ingredients and traditional recipes.",
+    "Jeet Bakery offers delicious cakes, pastries, pizzas, burgers, snacks, chocolates, birthday decorations, party supplies and premium party hall booking for every celebration.",
   keywords: [
-    "Munna Sweets",
-    "Indian sweets",
-    "Mithai",
-    "Rasgulla",
-    "Gulab Jamun",
-    "Kaju Katli",
-    "Namkeen",
-    "Sweet Shop",
-    "Fresh Sweets",
+    "Jeet Bakery",
+    "Birthday Cakes",
+    "Custom Cakes",
+    "Pastries",
+    "Bakery",
+    "Pizza",
+    "Burger",
+    "Fast Food",
+    "Birthday Decoration",
+    "Party Hall",
+    "Party Booking",
+    "Chocolate",
+    "Snacks",
+    "Celebration",
   ],
-  authors: [{ name: "Munna Sweets" }],
-
-  metadataBase: new URL("https://munna-sweets.vercel.app"),
-
-openGraph: {
-  title: "Munna Sweets | Fresh Indian Sweets & Namkeen",
-  description:
-    "Fresh Indian sweets, namkeen, gift boxes and festive specials.",
-  url: "https://munna-sweets.vercel.app",
-  siteName: "Munna Sweets",
-  type: "website",
-},
-
-twitter: {
-  card: "summary_large_image",
-  title: "Munna Sweets | Fresh Indian Sweets & Namkeen",
-  description:
-    "Fresh Indian sweets, namkeen, gift boxes and festive specials.",
-},
+  authors: [{ name: "Jeet Bakery" }],
+  metadataBase: new URL("https://jeet-bakery.vercel.app"),
+  openGraph: {
+    title: "Jeet Bakery | Cakes, Fast Food & Party Hall Booking",
+    description:
+      "Fresh cakes, delicious fast food, party decorations, premium birthday celebrations and party hall booking.",
+    url: "https://jeet-bakery.vercel.app",
+    siteName: "Jeet Bakery",
+    type: "website",
+    images: [
+    {
+      url: "/brand/jeet-bakery-logo.png",
+      width: 1200,
+      height: 630,
+      alt: "Jeet Bakery",
+    },
+  ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jeet Bakery | Cakes, Fast Food & Party Hall Booking",
+    description:
+      "Fresh cakes, delicious fast food, party decorations and premium birthday celebrations.",
+  },
 };
 
 export default function RootLayout({
@@ -61,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${playfair.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <CartProvider>

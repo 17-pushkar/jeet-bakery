@@ -1,62 +1,69 @@
-import { Award, HeartHandshake, Truck, ShieldCheck } from "lucide-react";
-import SectionTitle from "./SectionTitle";
+import { Award, CakeSlice, PartyPopper, ShieldCheck } from "lucide-react";
 
 const features = [
   {
+    icon: CakeSlice,
+    title: "Fresh Bakery Items",
+    description: "Cakes, pastries, biscuits and chocolates prepared with care.",
+  },
+  {
+    icon: PartyPopper,
+    title: "Complete Party Solution",
+    description: "Party hall, birthday setup, snacks and decoration essentials.",
+  },
+  {
     icon: Award,
-    title: "Premium Quality",
-    description: "We use the finest ingredients to prepare every sweet.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Trusted Since 1995",
-    description: "Serving delicious sweets with love for generations.",
-  },
-  {
-    icon: Truck,
-    title: "Fresh Every Day",
-    description: "Our sweets are prepared fresh daily for the best taste.",
+    title: "Premium Taste",
+    description: "Quality ingredients and beautiful presentation for every order.",
   },
   {
     icon: ShieldCheck,
-    title: "Pure & Hygienic",
-    description: "Made in a clean and hygienic kitchen with utmost care.",
+    title: "Clean & Hygienic",
+    description: "Prepared in a neat kitchen with attention to freshness.",
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-orange-50 py-20">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="bg-[#FFF9F3] px-6 py-24 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+            Why Choose Us
+          </p>
 
-        <SectionTitle
-          title="Why Choose Munna Sweets?"
-          subtitle="Every sweet is prepared with passion, purity, and tradition."
-        />
+          <h2 className="mt-4 text-4xl font-bold text-[#4E342E] md:text-5xl">
+            Why Choose Jeet Bakery?
+          </h2>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <p className="mt-5 text-lg leading-8 text-[#1F1F1F]/70">
+            From daily cravings to birthday celebrations, Jeet Bakery brings
+            taste, quality and party convenience together.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => {
             const Icon = feature.icon;
 
             return (
               <div
                 key={feature.title}
-                className="rounded-2xl bg-white p-6 shadow-md transition hover:-translate-y-2 hover:shadow-xl"
+                className="rounded-[2rem] border border-[#E8D9C8] bg-white p-7 shadow-sm transition hover:-translate-y-2 hover:border-[#C89B3C] hover:shadow-xl"
               >
-                <Icon className="mb-4 h-12 w-12 text-orange-600" />
+                <Icon className="h-12 w-12 text-[#C89B3C]" />
 
-                <h3 className="text-xl font-bold">
+                <h3 className="mt-6 text-2xl font-bold text-[#4E342E]">
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 text-gray-600">
+                <p className="mt-3 leading-7 text-[#1F1F1F]/70">
                   {feature.description}
                 </p>
               </div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

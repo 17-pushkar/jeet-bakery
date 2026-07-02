@@ -41,7 +41,7 @@ export default function CheckoutPage() {
       }),
     });
 
-    const message = `Hello Munna Sweets, I want to place an order:
+    const message = `Hello Jeet Bakery, I want to place an order:
 
 Name: ${name}
 Phone: ${phone}
@@ -70,20 +70,21 @@ Total: ₹${totalPrice}`;
 
   if (cartItems.length === 0) {
     return (
-      <main className="min-h-screen bg-orange-50 px-6 py-24">
-        <section className="mx-auto max-w-3xl rounded-3xl bg-white p-8 text-center shadow-lg">
-          <h1 className="text-4xl font-bold text-zinc-900">
+      <main className="min-h-screen bg-[#FFF9F3] px-6 py-24">
+        <section className="mx-auto max-w-3xl rounded-[2rem] border border-[#E8D9C8] bg-white p-10 text-center shadow-lg">
+          <h1 className="text-4xl font-bold text-[#4E342E]">
             Your cart is empty
           </h1>
-          <p className="mt-3 text-zinc-600">
-            Please add some sweets to your cart before checkout.
+
+          <p className="mt-3 text-[#1F1F1F]/65">
+            Please add cakes, snacks or party items before checkout.
           </p>
 
           <Link
             href="/products"
-            className="mt-6 inline-block rounded-full bg-orange-600 px-6 py-3 font-semibold text-white transition hover:bg-orange-700"
+            className="mt-6 inline-block rounded-full bg-[#4E342E] px-7 py-3 font-bold text-white transition hover:bg-[#C89B3C]"
           >
-            Browse Products
+            Browse Menu
           </Link>
         </section>
       </main>
@@ -91,14 +92,22 @@ Total: ₹${totalPrice}`;
   }
 
   return (
-    <main className="min-h-screen bg-orange-50 px-6 py-24">
-      <section className="mx-auto max-w-5xl rounded-3xl bg-white p-8 shadow-lg">
-        <h1 className="text-4xl font-bold text-zinc-900">Checkout</h1>
-        <p className="mt-3 text-zinc-600">
-          Enter your details to place your order on WhatsApp.
+    <main className="min-h-screen bg-[#FFF9F3] px-6 py-24 md:px-8">
+      <section className="mx-auto max-w-6xl rounded-[2.5rem] border border-[#E8D9C8] bg-white p-6 shadow-xl md:p-10">
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+          Checkout
         </p>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+        <h1 className="mt-4 text-5xl font-bold text-[#4E342E]">
+          Complete Your Order
+        </h1>
+
+        <p className="mt-4 max-w-2xl text-lg leading-8 text-[#1F1F1F]/70">
+          Enter your details and place your Jeet Bakery order directly through
+          WhatsApp.
+        </p>
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-2">
           <form onSubmit={handleSubmit} className="grid gap-5">
             <input
               type="text"
@@ -106,7 +115,7 @@ Total: ₹${totalPrice}`;
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-zinc-900 placeholder:text-zinc-500 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+              className="rounded-2xl border border-[#E8D9C8] bg-[#FFF9F3] px-5 py-4 text-[#1F1F1F] outline-none transition placeholder:text-[#1F1F1F]/45 focus:border-[#C89B3C] focus:ring-4 focus:ring-[#C89B3C]/15"
             />
 
             <input
@@ -115,22 +124,22 @@ Total: ₹${totalPrice}`;
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-zinc-900 placeholder:text-zinc-500 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+              className="rounded-2xl border border-[#E8D9C8] bg-[#FFF9F3] px-5 py-4 text-[#1F1F1F] outline-none transition placeholder:text-[#1F1F1F]/45 focus:border-[#C89B3C] focus:ring-4 focus:ring-[#C89B3C]/15"
             />
 
             <textarea
               placeholder="Delivery Address"
-              rows={4}
+              rows={5}
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
-              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-zinc-900 placeholder:text-zinc-500 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+              className="rounded-2xl border border-[#E8D9C8] bg-[#FFF9F3] px-5 py-4 text-[#1F1F1F] outline-none transition placeholder:text-[#1F1F1F]/45 focus:border-[#C89B3C] focus:ring-4 focus:ring-[#C89B3C]/15"
             />
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-full bg-orange-600 py-3 font-semibold text-white transition hover:bg-orange-700 disabled:cursor-not-allowed disabled:bg-zinc-400"
+              className="rounded-full bg-[#4E342E] py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-[#C89B3C] disabled:cursor-not-allowed disabled:bg-zinc-400"
             >
               {isSubmitting ? "Placing Order..." : "Place Order on WhatsApp"}
             </button>

@@ -20,7 +20,10 @@ type Product = {
 };
 
 export default function ProductsClient({ products }: { products: Product[] }) {
-  const categories = ["All", ...new Set(products.map((product) => product.category))];
+  const categories = [
+    "All",
+    ...new Set(products.map((product) => product.category)),
+  ];
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,88 +42,98 @@ export default function ProductsClient({ products }: { products: Product[] }) {
     })
     .sort((a, b) => {
       if (sortBy === "name") return a.name.localeCompare(b.name);
-      if (sortBy === "price-low") return a.weightOptions[2].price - b.weightOptions[2].price;
-      if (sortBy === "price-high") return b.weightOptions[2].price - a.weightOptions[2].price;
+
+      if (sortBy === "price-low") {
+        return (a.weightOptions[0]?.price ?? 0) - (b.weightOptions[0]?.price ?? 0);
+      }
+
+      if (sortBy === "price-high") {
+        return (b.weightOptions[0]?.price ?? 0) - (a.weightOptions[0]?.price ?? 0);
+      }
+
       return 0;
     });
 
   return (
-    <main className="min-h-screen bg-orange-50 px-6 py-24">
+    <main className="min-h-screen bg-[#FFF9F3] px-6 py-24 text-[#1F1F1F] md:px-8">
       <section className="mx-auto max-w-7xl">
-        <div className="text-center">
-          <p className="font-semibold uppercase tracking-wide text-orange-500">Our Menu</p>
-
-          <h1 className="mt-3 text-4xl font-bold text-zinc-900">
-            All Sweets & Products
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-600">
-            Explore our freshly prepared sweets made with traditional recipes and premium ingredients.
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+            Our Bakery Menu
           </p>
 
-          <div className="mx-auto mt-8 max-w-md">
-            <input
-              type="text"
-              placeholder="Search sweets..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-orange-200 bg-white px-5 py-3 text-zinc-900 placeholder:text-zinc-500 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-            />
-          </div>
+          <h1 className="mt-4 text-5xl font-bold text-[#4E342E] md:text-6xl">
+            Cakes, Fast Food & Party Essentials
+          </h1>
 
-          <div className="mt-6 flex justify-center">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#1F1F1F]/70">
+            Explore fresh cakes, pastries, pizzas, burgers, chocolates and
+            birthday celebration items from Jeet Bakery.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 grid max-w-4xl gap-4 md:grid-cols-[1fr_220px]">
+          <input
+            type="text"
+            placeholder="Search cakes, pizza, chocolates..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="rounded-full border border-[#E8D9C8] bg-white px-6 py-4 text-[#1F1F1F] shadow-sm outline-none transition placeholder:text-[#1F1F1F]/45 focus:border-[#C89B3C] focus:ring-4 focus:ring-[#C89B3C]/15"
+          />
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="rounded-full border border-[#E8D9C8] bg-white px-6 py-4 text-[#4E342E] shadow-sm outline-none transition focus:border-[#C89B3C] focus:ring-4 focus:ring-[#C89B3C]/15"
+          >
+            <option value="default">Sort: Default</option>
+            <option value="name">Name A-Z</option>
+            <option value="price-low">Price Low to High</option>
+            <option value="price-high">Price High to Low</option>
+          </select>
+        </div>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`rounded-full border px-5 py-2.5 text-sm font-bold uppercase tracking-[0.14em] transition ${
+                selectedCategory === category
+                  ? "border-[#4E342E] bg-[#4E342E] text-white shadow-md"
+                  : "border-[#E8D9C8] bg-white text-[#4E342E] hover:border-[#C89B3C] hover:bg-[#F6E7D8]"
+              }`}
             >
-              <option value="default">Sort: Default</option>
-              <option value="name">Name (A-Z)</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-            </select>
-          </div>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
-                  selectedCategory === category
-                    ? "bg-orange-600 text-white"
-                    : "bg-white text-zinc-700 hover:bg-orange-100"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+              {category}
+            </button>
+          ))}
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="mt-14 rounded-3xl bg-white p-10 text-center shadow-md">
-            <h2 className="text-2xl font-bold text-zinc-900">No products found</h2>
-            <p className="mt-3 text-zinc-600">
-              Try searching with a different sweet name or category.
+          <div className="mt-14 rounded-[2rem] border border-[#E8D9C8] bg-white p-10 text-center shadow-sm">
+            <h2 className="text-2xl font-bold text-[#4E342E]">
+              No products found
+            </h2>
+            <p className="mt-3 text-[#1F1F1F]/65">
+              Try searching another product or category.
             </p>
           </div>
         ) : (
           <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
               <ProductGridCard
-                key={product.slug}
-                name={product.name}
-                slug={product.slug}
-                price={product.price}
-                image={product.image}
-                description={product.description}
-                category={product.category}
-                ingredients={product.ingredients}
-                badge={product.badge ?? undefined}
-                stock={product.stock}
-                weightOptions={product.weightOptions}
-              />
+  key={product.slug}
+  name={product.name}
+  slug={product.slug}
+  price={product.price}
+  image={product.image}
+  description={product.description}
+  category={product.category}
+  ingredients={product.ingredients}
+  badge={product.badge ?? undefined}
+  stock={product.stock}
+  weightOptions={product.weightOptions}
+/>
             ))}
           </div>
         )}

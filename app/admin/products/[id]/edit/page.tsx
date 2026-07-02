@@ -22,35 +22,61 @@ export default async function EditProductPage({
     product.weightOptions.find((item) => item.weight === weight)?.price ?? 0;
 
   const inputClass =
-    "w-full rounded-xl border border-orange-200 bg-white px-4 py-3 text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200";
+    "w-full rounded-xl border border-[#E8D9C8] bg-white px-4 py-3 text-[#1F1F1F] placeholder:text-zinc-400 outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#F6E7D8]";
 
   return (
-    <main className="min-h-screen bg-zinc-100 px-6 py-24">
-      <section className="mx-auto max-w-3xl rounded-3xl bg-white p-8 shadow-md">
-        <h1 className="text-4xl font-bold text-zinc-900">Edit Product</h1>
+    <main className="min-h-screen bg-[#FFF9F3] px-6 py-10">
+      <section className="mx-auto max-w-3xl">
+        <div className="rounded-[2rem] border border-[#E8D9C8] bg-[#4E342E] p-8 text-white shadow-lg">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#C89B3C]">
+            Jeet Bakery Admin
+          </p>
 
-        <form action={updateProduct} className="mt-8 space-y-5">
+          <h1 className="mt-3 font-serif text-4xl font-bold">Edit Product</h1>
+
+          <p className="mt-3 text-[#F6E7D8]">
+            Update product details, stock, image, and pricing.
+          </p>
+        </div>
+
+        <form
+          action={updateProduct}
+          className="mt-8 space-y-5 rounded-3xl border border-[#E8D9C8] bg-white p-8 shadow-sm"
+        >
           <input type="hidden" name="id" value={product.id} />
 
           <input name="name" defaultValue={product.name} className={inputClass} />
-          <input name="slug" defaultValue={product.slug} className={inputClass} />
-          <div>
-  <label className="mb-2 block font-semibold text-zinc-800">
-    Product Image
-  </label>
 
-  <ImageUploadInput defaultImage={product.image} />
-</div>
-          <input name="category" defaultValue={product.category} className={inputClass} />
+          <input name="slug" defaultValue={product.slug} className={inputClass} />
+
+          <div>
+            <label className="mb-2 block font-semibold text-[#1F1F1F]">
+              Product Image
+            </label>
+
+            <ImageUploadInput defaultImage={product.image} />
+          </div>
+
           <input
-  name="stock"
-  type="number"
-  min="0"
-  defaultValue={product.stock}
-  className={inputClass}
-  placeholder="Stock quantity"
-/>
-          <input name="badge" defaultValue={product.badge ?? ""} className={inputClass} />
+            name="category"
+            defaultValue={product.category}
+            className={inputClass}
+          />
+
+          <input
+            name="stock"
+            type="number"
+            min="0"
+            defaultValue={product.stock}
+            className={inputClass}
+            placeholder="Stock quantity"
+          />
+
+          <input
+            name="badge"
+            defaultValue={product.badge ?? ""}
+            className={inputClass}
+          />
 
           <textarea
             name="description"
@@ -65,16 +91,41 @@ export default async function EditProductPage({
             className={inputClass}
           />
 
-          <h2 className="pt-4 text-2xl font-bold text-zinc-900">Weight Prices</h2>
+          <h2 className="pt-4 font-serif text-2xl font-bold text-[#1F1F1F]">
+            Weight Prices
+          </h2>
 
-          <input name="price250g" type="number" defaultValue={getPrice("250g")} className={inputClass} />
-          <input name="price500g" type="number" defaultValue={getPrice("500g")} className={inputClass} />
-          <input name="price1kg" type="number" defaultValue={getPrice("1kg")} className={inputClass} />
-          <input name="price2kg" type="number" defaultValue={getPrice("2kg")} className={inputClass} />
+          <input
+            name="price250g"
+            type="number"
+            defaultValue={getPrice("250g")}
+            className={inputClass}
+          />
+
+          <input
+            name="price500g"
+            type="number"
+            defaultValue={getPrice("500g")}
+            className={inputClass}
+          />
+
+          <input
+            name="price1kg"
+            type="number"
+            defaultValue={getPrice("1kg")}
+            className={inputClass}
+          />
+
+          <input
+            name="price2kg"
+            type="number"
+            defaultValue={getPrice("2kg")}
+            className={inputClass}
+          />
 
           <button
             type="submit"
-            className="rounded-full bg-orange-600 px-6 py-3 font-semibold text-white hover:bg-orange-700"
+            className="rounded-full bg-[#4E342E] px-7 py-3 font-semibold text-white transition hover:bg-[#3b2722]"
           >
             Update Product
           </button>

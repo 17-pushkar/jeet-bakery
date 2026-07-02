@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import ProductDetailsActions from "@/components/ProductDetailsActions";
 
-
 export async function generateMetadata({
   params,
 }: {
@@ -23,7 +22,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: product.name,
+    title: `${product.name} | Jeet Bakery`,
     description: product.description,
     openGraph: {
       title: product.name,
@@ -49,11 +48,14 @@ export default async function ProductDetailsPage({
 
   if (!product) {
     return (
-      <main className="min-h-screen px-6 py-24 text-center">
-        <h1 className="text-3xl font-bold text-zinc-900">Product not found</h1>
+      <main className="min-h-screen bg-[#FFF9F3] px-6 py-24 text-center">
+        <h1 className="text-4xl font-bold text-[#4E342E]">
+          Product not found
+        </h1>
+
         <Link
           href="/products"
-          className="mt-6 inline-block rounded-full bg-orange-500 px-6 py-3 text-white"
+          className="mt-6 inline-block rounded-full bg-[#4E342E] px-7 py-3 font-semibold text-white transition hover:bg-[#C89B3C]"
         >
           Go back to products
         </Link>
@@ -66,6 +68,7 @@ export default async function ProductDetailsPage({
       slug: {
         not: slug,
       },
+      category: product.category,
     },
     include: {
       weightOptions: true,
@@ -73,67 +76,86 @@ export default async function ProductDetailsPage({
     take: 3,
   });
 
-  const displayPrice = `₹${
-    product.weightOptions.find((option) => option.weight === "1kg")?.price ?? 0
-  }/kg`;
+  const displayPrice = `₹${product.weightOptions[0]?.price ?? 0}`;
 
   return (
-    <main className="min-h-screen bg-orange-50 px-6 py-24">
-      <section className="mx-auto grid max-w-6xl gap-10 rounded-3xl bg-white p-6 shadow-lg md:grid-cols-2 md:p-10">
-        <div className="relative h-80 overflow-hidden rounded-3xl md:h-[480px]">
+    <main className="min-h-screen bg-[#FFF9F3] px-6 py-24 text-[#1F1F1F] md:px-8">
+      <section className="mx-auto grid max-w-7xl gap-12 rounded-[2.5rem] border border-[#E8D9C8] bg-white p-5 shadow-xl lg:grid-cols-2 lg:p-10">
+        <div className="relative overflow-hidden rounded-[2rem] bg-[#F6E7D8]">
           <Image
             src={product.image}
             alt={product.name}
-            fill
-            className="object-cover"
+            width={900}
+            height={900}
             priority
+            className="h-[420px] w-full object-cover md:h-[620px]"
           />
+
+          {product.badge && (
+            <span className="absolute left-5 top-5 rounded-full bg-[#C89B3C] px-4 py-2 text-sm font-bold uppercase tracking-[0.15em] text-white shadow-md">
+              {product.badge}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col justify-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-orange-500">
-            Munna Sweets Special
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+            Jeet Bakery Special
           </p>
 
-          <h1 className="mt-3 text-4xl font-bold text-zinc-900">
+          <h1 className="mt-4 text-5xl font-bold leading-tight text-[#4E342E]">
             {product.name}
           </h1>
 
-          <p className="mt-4 text-2xl font-bold text-orange-600">
-            {displayPrice}
+          <div className="mt-4 flex items-center gap-3 text-[#C89B3C]">
+            <span>★★★★★</span>
+            <span className="text-sm font-medium text-[#1F1F1F]/55">
+              4.9 Customer Rating
+            </span>
+          </div>
+
+          <p className="mt-5 text-3xl font-bold text-[#C89B3C]">
+            Starting from {displayPrice}
           </p>
 
-          <p className="mt-5 text-lg leading-8 text-zinc-600">
+          <p className="mt-5 text-lg leading-8 text-[#1F1F1F]/70">
             {product.description}
           </p>
 
-          <div className="mt-6">
-            <h2 className="text-lg font-semibold text-zinc-900">
-              Available Quantity
+          <div className="mt-6 rounded-[2rem] border border-[#E8D9C8] bg-[#FFF9F3] p-6">
+            <h2 className="text-xl font-bold text-[#4E342E]">
+              Product Details
             </h2>
 
-            <div className="mt-3 flex flex-wrap gap-3">
-              {product.weightOptions.map((option) => (
-                <span
-                  key={option.weight}
-                  className="rounded-full border border-orange-200 bg-white px-5 py-2 text-sm font-semibold text-zinc-700"
-                >
-                  {option.weight}
-                </span>
-              ))}
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#C89B3C]">
+                  Category
+                </p>
+                <p className="mt-1 font-semibold text-[#4E342E]">
+                  {product.category}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#C89B3C]">
+                  Stock
+                </p>
+                <p className="mt-1 font-semibold text-[#4E342E]">
+                  {product.stock > 0 ? `${product.stock} available` : "Out of stock"}
+                </p>
+              </div>
             </div>
           </div>
 
           <div className="mt-6">
-            <h2 className="text-lg font-semibold text-zinc-900">
-              Ingredients
-            </h2>
+            <h2 className="text-xl font-bold text-[#4E342E]">Ingredients</h2>
 
             <div className="mt-3 flex flex-wrap gap-3">
               {product.ingredients.map((ingredient) => (
                 <span
                   key={ingredient}
-                  className="rounded-full bg-orange-100 px-4 py-2 text-sm font-medium text-orange-700"
+                  className="rounded-full border border-[#E8D9C8] bg-[#F6E7D8] px-4 py-2 text-sm font-semibold text-[#4E342E]"
                 >
                   {ingredient}
                 </span>
@@ -142,55 +164,63 @@ export default async function ProductDetailsPage({
           </div>
 
           <ProductDetailsActions
-  product={{
-    name: product.name,
-    slug: product.slug,
-    image: product.image,
-    stock: product.stock,
-    weightOptions: product.weightOptions,
-  }}
-/>
+            product={{
+              name: product.name,
+              slug: product.slug,
+              image: product.image,
+              stock: product.stock,
+              weightOptions: product.weightOptions,
+            }}
+          />
         </div>
       </section>
 
-      <section className="mx-auto mt-16 max-w-6xl">
-        <h2 className="text-3xl font-bold text-zinc-900">Related Products</h2>
+      {relatedProducts.length > 0 && (
+        <section className="mx-auto mt-16 max-w-7xl">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+              You may also like
+            </p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {relatedProducts.map((item) => {
-            const itemPrice = `₹${
-              item.weightOptions.find((option) => option.weight === "1kg")
-                ?.price ?? 0
-            }/kg`;
+            <h2 className="mt-4 text-4xl font-bold text-[#4E342E]">
+              Related Products
+            </h2>
+          </div>
 
-            return (
-              <Link
-                key={item.slug}
-                href={`/products/${item.slug}`}
-                className="group overflow-hidden rounded-3xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="relative h-56">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedProducts.map((item) => {
+              const itemPrice = `₹${item.weightOptions[0]?.price ?? 0}`;
 
-                <div className="p-5">
-                  <h3 className="text-xl font-bold text-zinc-900">
-                    {item.name}
-                  </h3>
-                  <p className="mt-2 font-semibold text-orange-600">
-                    {itemPrice}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+              return (
+                <Link
+                  key={item.slug}
+                  href={`/products/${item.slug}`}
+                  className="group overflow-hidden rounded-[2rem] border border-[#E8D9C8] bg-white shadow-sm transition hover:-translate-y-2 hover:border-[#C89B3C] hover:shadow-xl"
+                >
+                  <div className="relative h-60 overflow-hidden bg-[#F6E7D8]">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold text-[#4E342E]">
+                      {item.name}
+                    </h3>
+
+                    <p className="mt-2 font-bold text-[#C89B3C]">
+                      Starting from {itemPrice}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

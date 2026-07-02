@@ -1,54 +1,66 @@
-import SectionTitle from "./SectionTitle";
-
 const testimonials = [
   {
-    name: "Rahul Sharma",
+    name: "Rohit Sharma",
     review:
-      "The sweets were absolutely delicious and fresh. My family loved the Gulab Jamun!",
+      "The birthday cake looked beautiful and tasted amazing. Everyone at the party loved it!",
   },
   {
-    name: "Priya Verma",
+    name: "Neha Verma",
     review:
-      "Excellent quality and very hygienic. Munna Sweets is our first choice for every festival.",
+      "The party hall decoration was excellent and the staff managed everything perfectly. Highly recommended.",
   },
   {
-    name: "Amit Gupta",
+    name: "Aman Gupta",
     review:
-      "Great taste, reasonable prices, and friendly staff. Highly recommended!",
+      "Fresh pastries, delicious pizza and excellent service. Jeet Bakery has become our family's favourite place.",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="bg-orange-50 py-20">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="bg-[#F6E7D8] px-6 py-24 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#C89B3C]">
+            Testimonials
+          </p>
 
-        <SectionTitle
-          title="What Our Customers Say"
-          subtitle="The love and trust of our customers inspire us every day."
-        />
+          <h2 className="mt-4 text-4xl font-bold text-[#4E342E] md:text-5xl">
+            Loved by Our Customers
+          </h2>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <p className="mt-5 text-lg leading-8 text-[#1F1F1F]/70">
+            Every smile, celebration and repeat visit motivates us to serve even
+            better.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.name}
-              className="rounded-2xl bg-white p-8 shadow-md transition hover:-translate-y-2 hover:shadow-xl"
+              className="rounded-[2rem] border border-[#E8D9C8] bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:border-[#C89B3C] hover:shadow-xl"
             >
-              <div className="mb-4 text-2xl text-yellow-500">
+              <div className="text-[#C89B3C] text-xl">
                 ⭐⭐⭐⭐⭐
               </div>
 
-              <p className="text-gray-600 italic">
+              <p className="mt-5 italic leading-8 text-[#1F1F1F]/70">
                 "{testimonial.review}"
               </p>
 
-              <h3 className="mt-6 text-xl font-bold">
-                {testimonial.name}
-              </h3>
+              <div className="mt-8 border-t border-[#E8D9C8] pt-5">
+                <h3 className="text-xl font-bold text-[#4E342E]">
+                  {testimonial.name}
+                </h3>
+
+                <p className="mt-1 text-sm uppercase tracking-[0.2em] text-[#C89B3C]">
+                  Verified Customer
+                </p>
+              </div>
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
