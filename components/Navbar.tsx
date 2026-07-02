@@ -30,13 +30,13 @@ export default function Navbar() {
         <nav className="mx-auto flex h-24 max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/brand/jeet-bakery-logo.png"
-              alt="Jeet Bakery Logo"
-              width={66}
-              height={66}
-              priority
-              className="rounded-full"
-            />
+  src="/brand/jeet-bakery-logo.png"
+  alt="Jeet Bakery Logo"
+  width={76}
+  height={76}
+  priority
+  className="h-16 w-16 rounded-full object-contain md:h-20 md:w-20"
+/>
 
             <div className="leading-tight">
               <p className="font-serif text-2xl font-bold tracking-wide text-[#4E342E]">
