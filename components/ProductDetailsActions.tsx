@@ -33,7 +33,7 @@ export default function ProductDetailsActions({
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold text-[#4E342E]">Select Option</h2>
+      <h2 className="text-xl font-bold text-white">Select Option</h2>
 
       <div className="mt-4 flex flex-wrap gap-3">
         {product.weightOptions.map((option) => (
@@ -41,10 +41,10 @@ export default function ProductDetailsActions({
             key={option.weight}
             type="button"
             onClick={() => setSelectedWeight(option)}
-            className={`rounded-full border px-5 py-2.5 text-sm font-bold uppercase tracking-[0.14em] transition ${
+            className={`rounded-full border px-5 py-2.5 text-sm font-black uppercase tracking-[0.14em] transition ${
               selectedWeight.weight === option.weight
-                ? "border-[#4E342E] bg-[#4E342E] text-white"
-                : "border-[#E8D9C8] bg-[#FFF9F3] text-[#4E342E] hover:border-[#C89B3C] hover:bg-[#F6E7D8]"
+                ? "border-[#C1121F] bg-[#C1121F] text-white shadow-[0_12px_28px_rgba(193,18,31,0.35)]"
+                : "border-[#C89B3C]/25 bg-white/[0.08] text-white hover:border-[#C89B3C] hover:bg-white/[0.12]"
             }`}
           >
             {option.weight}
@@ -52,7 +52,7 @@ export default function ProductDetailsActions({
         ))}
       </div>
 
-      <p className="mt-6 text-3xl font-bold text-[#C89B3C]">
+      <p className="mt-6 text-3xl font-black text-[#E8C978]">
         ₹{selectedWeight.price}
       </p>
 
@@ -75,10 +75,10 @@ export default function ProductDetailsActions({
               `${product.name} ${selectedWeight.weight} added to cart!`
             );
           }}
-          className={`flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] transition ${
+          className={`flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-black uppercase tracking-[0.18em] transition duration-300 ${
             isOutOfStock
-              ? "cursor-not-allowed bg-zinc-300 text-zinc-500"
-              : "bg-[#4E342E] text-white hover:bg-[#C89B3C]"
+              ? "cursor-not-allowed bg-zinc-500 text-zinc-300"
+              : "bg-[#C1121F] text-white shadow-[0_18px_35px_rgba(193,18,31,0.35)] hover:-translate-y-1 hover:bg-[#9B0D18]"
           }`}
         >
           <ShoppingBag className="h-5 w-5" />
@@ -87,7 +87,7 @@ export default function ProductDetailsActions({
 
         <Link
           href="/products"
-          className="rounded-full border border-[#E8D9C8] px-8 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#4E342E] transition hover:border-[#C89B3C] hover:bg-[#F6E7D8]"
+          className="rounded-full border border-[#C89B3C]/35 bg-white/[0.08] px-8 py-4 text-center text-sm font-black uppercase tracking-[0.18em] text-[#E8C978] transition duration-300 hover:-translate-y-1 hover:bg-white/[0.12]"
         >
           Back to Menu
         </Link>

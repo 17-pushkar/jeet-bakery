@@ -28,9 +28,9 @@ export default function DeleteProductButton({
 
       <button
         type="submit"
-        className="w-full sm:w-72 rounded-full bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100"
+        className="w-full rounded-full border border-[#C1121F]/20 bg-[#FFE4E4] px-4 py-2 text-sm font-semibold text-[#C1121F] transition hover:bg-[#C1121F] hover:text-white sm:w-72"
       >
-        Delete
+        Delete Product
       </button>
     </form>
   );

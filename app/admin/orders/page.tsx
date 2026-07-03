@@ -7,9 +7,9 @@ import { updateOrderStatus } from "./actions";
 const statuses = ["Pending", "Preparing", "Ready", "Delivered"];
 
 function getStatusClass(status: string) {
-  if (status === "Pending") return "bg-yellow-100 text-yellow-800";
-  if (status === "Preparing") return "bg-blue-100 text-blue-800";
-  if (status === "Ready") return "bg-purple-100 text-purple-800";
+  if (status === "Pending") return "bg-[#FFF3CD] text-[#8A5A00]";
+  if (status === "Preparing") return "bg-[#FFE4E4] text-[#9B0D18]";
+  if (status === "Ready") return "bg-[#F7E7B6] text-[#6F0A12]";
   if (status === "Delivered") return "bg-green-100 text-green-800";
   return "bg-zinc-100 text-zinc-700";
 }
@@ -47,16 +47,16 @@ export default async function AdminOrdersPage({
   });
 
   return (
-    <main className="min-h-screen bg-[#FFF9F3] px-4 py-10 sm:px-6">
+    <main className="min-h-screen bg-[#FFF2F2] px-4 py-10 sm:px-6">
       <section className="mx-auto max-w-6xl">
-        <div className="rounded-[2rem] border border-[#E8D9C8] bg-[#4E342E] p-8 text-white shadow-lg">
+        <div className="rounded-[2rem] border border-[#C89B3C]/40 bg-[#3A0509] p-8 text-white shadow-lg">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#C89B3C]">
             Jeet Bakery Admin
           </p>
 
           <h1 className="mt-3 font-serif text-4xl font-bold">Orders</h1>
 
-          <p className="mt-3 text-[#F6E7D8]">
+          <p className="mt-3 text-[#FFE4E4]">
             View customer details, ordered items, payment totals, and update
             order status.
           </p>
@@ -66,7 +66,7 @@ export default async function AdminOrdersPage({
           <form action="/admin/orders" className="relative w-full sm:max-w-sm">
             <Search
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4E342E]"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6F0A12]"
             />
 
             <input
@@ -74,14 +74,14 @@ export default async function AdminOrdersPage({
               name="search"
               defaultValue={search ?? ""}
               placeholder="Search by name, phone, or address..."
-              className="w-full rounded-xl border border-[#E8D9C8] bg-white px-11 py-3 text-sm outline-none transition focus:border-[#C89B3C] focus:ring-2 focus:ring-[#F6E7D8]"
+              className="w-full rounded-xl border border-[#EFCACA] bg-white px-11 py-3 text-sm text-[#2B2B2B] outline-none transition placeholder:text-zinc-400 focus:border-[#C89B3C] focus:ring-2 focus:ring-[#E8C978]/40"
             />
           </form>
 
           {search && (
             <a
               href="/admin/orders"
-              className="rounded-xl border border-[#E8D9C8] bg-white px-5 py-3 text-center text-sm font-semibold text-[#4E342E] hover:bg-[#F6E7D8]"
+              className="rounded-xl border border-[#EFCACA] bg-white px-5 py-3 text-center text-sm font-semibold text-[#6F0A12] transition hover:bg-[#FFE4E4]"
             >
               Clear Search
             </a>
@@ -89,7 +89,7 @@ export default async function AdminOrdersPage({
         </div>
 
         {orders.length === 0 ? (
-          <div className="mt-8 rounded-3xl border border-[#E8D9C8] bg-white p-8 text-center shadow-sm">
+          <div className="mt-8 rounded-3xl border border-[#EFCACA] bg-white p-8 text-center shadow-sm">
             <p className="text-zinc-600">No orders found.</p>
           </div>
         ) : (
@@ -97,11 +97,11 @@ export default async function AdminOrdersPage({
             {orders.map((order) => (
               <div
                 key={order.id}
-                className="rounded-3xl border border-[#E8D9C8] bg-white p-5 shadow-sm sm:p-6"
+                className="rounded-3xl border border-[#EFCACA] bg-white p-5 shadow-sm sm:p-6"
               >
-                <div className="flex flex-col gap-5 border-b border-[#E8D9C8] pb-5 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-5 border-b border-[#EFCACA] pb-5 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <h2 className="font-serif text-2xl font-bold text-[#1F1F1F]">
+                    <h2 className="font-serif text-2xl font-bold text-[#6F0A12]">
                       {order.customer.name}
                     </h2>
 
@@ -130,14 +130,14 @@ export default async function AdminOrdersPage({
                       {order.status}
                     </span>
 
-                    <p className="mt-4 text-3xl font-bold text-[#4E342E]">
+                    <p className="mt-4 text-3xl font-bold text-[#C1121F]">
                       ₹{order.totalAmount}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-5">
-                  <h3 className="font-serif text-xl font-bold text-[#1F1F1F]">
+                  <h3 className="font-serif text-xl font-bold text-[#6F0A12]">
                     Ordered Items
                   </h3>
 
@@ -145,10 +145,10 @@ export default async function AdminOrdersPage({
                     {order.items.map((item) => (
                       <div
                         key={item.id}
-                        className="flex flex-col gap-2 rounded-2xl border border-[#E8D9C8] bg-[#FFF9F3] px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+                        className="flex flex-col gap-2 rounded-2xl border border-[#EFCACA] bg-[#FFF3F3] px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                       >
                         <div>
-                          <p className="font-semibold text-[#1F1F1F]">
+                          <p className="font-semibold text-[#2B2B2B]">
                             {item.product.name}
                           </p>
 
@@ -157,7 +157,7 @@ export default async function AdminOrdersPage({
                           </p>
                         </div>
 
-                        <p className="font-bold text-[#4E342E]">
+                        <p className="font-bold text-[#C1121F]">
                           ₹{item.price * item.quantity}
                         </p>
                       </div>
@@ -174,7 +174,7 @@ export default async function AdminOrdersPage({
                   <select
                     name="status"
                     defaultValue={order.status}
-                    className="w-full rounded-xl border border-[#E8D9C8] bg-white px-4 py-3 text-sm font-medium text-[#1F1F1F] outline-none focus:border-[#C89B3C] sm:w-auto"
+                    className="w-full rounded-xl border border-[#EFCACA] bg-white px-4 py-3 text-sm font-medium text-[#2B2B2B] outline-none focus:border-[#C89B3C] focus:ring-2 focus:ring-[#E8C978]/40 sm:w-auto"
                   >
                     {statuses.map((status) => (
                       <option key={status} value={status}>
@@ -185,7 +185,7 @@ export default async function AdminOrdersPage({
 
                   <button
                     type="submit"
-                    className="w-full rounded-xl bg-[#4E342E] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3b2722] sm:w-auto"
+                    className="w-full rounded-xl bg-[#C1121F] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#9B0D18] sm:w-auto"
                   >
                     Update Status
                   </button>

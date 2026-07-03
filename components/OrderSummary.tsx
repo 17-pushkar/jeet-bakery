@@ -10,39 +10,62 @@ export default function OrderSummary() {
   }, 0);
 
   return (
-    <div className="rounded-[2rem] border border-[#E8D9C8] bg-[#FFF9F3] p-6">
-      <h2 className="text-2xl font-bold text-[#4E342E]">Order Summary</h2>
+    <div className="rounded-[2.5rem] border border-[#EFCACA] bg-[#FFF7F7] p-7 shadow-[0_20px_50px_rgba(111,10,18,0.10)]">
+      <div className="mb-6">
+        <p className="text-sm font-black uppercase tracking-[0.28em] text-[#C89B3C]">
+          Order
+        </p>
+
+        <h2 className="mt-2 font-serif text-3xl font-bold text-[#6F0A12]">
+          Order Summary
+        </h2>
+      </div>
 
       {cartItems.length === 0 ? (
-        <p className="mt-4 text-[#1F1F1F]/60">No items in cart.</p>
+        <p className="text-[#2B2B2B]/60">
+          No items in cart.
+        </p>
       ) : (
         <>
-          <div className="mt-6 space-y-4">
+          <div className="space-y-4">
             {cartItems.map((item) => (
               <div
                 key={`${item.slug}-${item.weight}`}
-                className="flex items-center justify-between gap-4 rounded-2xl border border-[#E8D9C8] bg-white p-4"
+                className="rounded-[1.5rem] border border-[#EFCACA] bg-white p-5 shadow-sm"
               >
-                <div>
-                  <p className="font-bold text-[#4E342E]">{item.name}</p>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-bold text-[#6F0A12]">
+                      {item.name}
+                    </h3>
 
-                  <p className="mt-1 text-sm text-[#1F1F1F]/55">
-                    {item.weight} × {item.quantity}
+                    <p className="mt-1 text-sm text-[#2B2B2B]/60">
+                      {item.weight} × {item.quantity}
+                    </p>
+                  </div>
+
+                  <p className="font-black text-[#C1121F]">
+                    ₹{item.price * item.quantity}
                   </p>
                 </div>
-
-                <p className="font-bold text-[#C89B3C]">
-                  ₹{item.price * item.quantity}
-                </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 border-t border-[#E8D9C8] pt-5">
-            <div className="flex items-center justify-between text-2xl font-bold text-[#4E342E]">
-              <span>Total</span>
-              <span>₹{totalPrice}</span>
+          <div className="mt-8 border-t border-[#EFCACA] pt-6">
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-bold text-[#6F0A12]">
+                Total
+              </span>
+
+              <span className="text-3xl font-black text-[#C1121F]">
+                ₹{totalPrice}
+              </span>
             </div>
+
+            <p className="mt-3 text-sm text-[#2B2B2B]/55">
+              Delivery charges (if applicable) will be confirmed by Jeet Bakery.
+            </p>
           </div>
         </>
       )}
